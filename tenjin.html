@@ -673,35 +673,33 @@
       }
 
       /* ── NEXT/PREV NAV ── */
-      .cs-nav {
-        padding: 80px 0;
-        border-top: 1px solid var(--border);
+      .case-nav {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
+        padding: 60px 0;
+        border-top: 1px solid var(--border);
       }
-      .cs-nav-link {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        text-decoration: none;
-      }
-      .cs-nav-dir {
+      .case-nav-item { display: flex; flex-direction: column; gap: 8px; }
+      .case-nav-right { align-items: flex-end; text-align: right; }
+      .case-nav-link { text-decoration: none; }
+      .case-nav-label {
         font-family: var(--mono);
-        font-size: 10px;
-        letter-spacing: 0.14em;
+        font-size: 11px;
+        letter-spacing: 0.18em;
         color: var(--dim);
         text-transform: uppercase;
+        display: block;
       }
-      .cs-nav-title {
+      .case-nav-title {
         font-family: var(--serif);
-        font-size: 22px;
+        font-size: 32px;
+        font-weight: 400;
         color: var(--text);
+        display: block;
         transition: color 0.2s;
       }
-      .cs-nav-link:hover .cs-nav-title {
-        color: var(--accent);
-      }
+      .case-nav-link:hover .case-nav-title { color: var(--accent); }
 
       /* ── BACK TO TOP ── */
       .back-to-top-wrap {
@@ -776,11 +774,6 @@
         }
         .learnings-grid {
           grid-template-columns: 1fr;
-        }
-        .cs-nav {
-          flex-direction: column;
-          gap: 40px;
-          align-items: flex-start;
         }
       }
     </style>
@@ -1481,15 +1474,19 @@
 
     <!-- CASE STUDY NAV -->
       <div class="wrap">
-        <div class="cs-nav">
-          <a href="hatchmatch.html" class="cs-nav-link">
-            <span class="cs-nav-dir">← Previous</span>
-            <span class="cs-nav-title">HatchMatch</span>
-          </a>
-          <a href="koverse.html" class="cs-nav-link" style="text-align: right">
-            <span class="cs-nav-dir">Next →</span>
-            <span class="cs-nav-title">Koverse / Aether</span>
-          </a>
+        <div class="case-nav">
+          <div class="case-nav-item">
+            <a href="index.html" class="case-nav-link">
+              <span class="case-nav-label">← BACK</span>
+              <span class="case-nav-title">All Work</span>
+            </a>
+          </div>
+          <div class="case-nav-item case-nav-right">
+            <a href="koverse.html" class="case-nav-link">
+              <span class="case-nav-label">NEXT →</span>
+              <span class="case-nav-title">Koverse</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>

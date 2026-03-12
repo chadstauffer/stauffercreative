@@ -606,13 +606,13 @@
       /* annotated screen — phone + notes side by side */
       .annotated {
         display: grid;
-        grid-template-columns: 260px 1fr;
-        gap: 56px;
+        grid-template-columns: 420px 1fr;
+        gap: 60px;
         align-items: start;
         margin: 48px 0;
       }
       .annotated.flip {
-        grid-template-columns: 1fr 260px;
+        grid-template-columns: 1fr 420px;
       }
       .annotated.flip .annotated-phone {
         order: 2;
@@ -628,6 +628,7 @@
       }
       .annotated-notes {
         padding-top: 4px;
+        max-width: 480px;
       } /* optical alignment with phone top edge */
       .annotated-label {
         font-family: var(--mono);
@@ -665,7 +666,7 @@
         margin-top: 8px;
       }
       .decision {
-        padding: 20px 24px;
+        padding: 20px;
         border-radius: var(--r);
         border: 1px solid var(--border);
         background: var(--bg-raised);
@@ -688,6 +689,7 @@
       }
       .decision-desc {
         font-size: 13px;
+        font-weight: 300;
         color: var(--muted);
         line-height: 1.65;
       }
@@ -733,9 +735,15 @@
           transition: opacity 300ms ease;
           pointer-events: none;
         }
-        .learning:hover::after { opacity: 1; }
-        .learning { transition: border-color 250ms ease; }
-        .learning:hover { border-color: rgba(232, 135, 74, 0.4); }
+        .learning:hover::after {
+          opacity: 1;
+        }
+        .learning {
+          transition: border-color 250ms ease;
+        }
+        .learning:hover {
+          border-color: rgba(232, 135, 74, 0.4);
+        }
 
         /* hover-to-highlight: decision card with adjacent mockup */
         .decision[data-highlight] {
@@ -895,35 +903,33 @@
       }
 
       /* ── NEXT/PREV NAV ── */
-      .cs-nav {
-        padding: 80px 0;
-        border-top: 1px solid var(--border);
+      .case-nav {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
+        padding: 60px 0;
+        border-top: 1px solid var(--border);
       }
-      .cs-nav-link {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        text-decoration: none;
-      }
-      .cs-nav-dir {
+      .case-nav-item { display: flex; flex-direction: column; gap: 8px; }
+      .case-nav-right { align-items: flex-end; text-align: right; }
+      .case-nav-link { text-decoration: none; }
+      .case-nav-label {
         font-family: var(--mono);
-        font-size: 10px;
-        letter-spacing: 0.14em;
+        font-size: 11px;
+        letter-spacing: 0.18em;
         color: var(--dim);
         text-transform: uppercase;
+        display: block;
       }
-      .cs-nav-title {
+      .case-nav-title {
         font-family: var(--serif);
-        font-size: 22px;
+        font-size: 32px;
+        font-weight: 400;
         color: var(--text);
+        display: block;
         transition: color 0.2s;
       }
-      .cs-nav-link:hover .cs-nav-title {
-        color: var(--accent);
-      }
+      .case-nav-link:hover .case-nav-title { color: var(--accent); }
 
       /* ── BACK TO TOP ── */
       .back-to-top-wrap {
@@ -931,7 +937,7 @@
         justify-content: center;
         padding: 48px 0 40px;
       }
-            .back-to-top {
+      .back-to-top {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -941,8 +947,13 @@
         cursor: pointer;
         padding: 0;
       }
-      .back-to-top:hover .btt-label { color: var(--text); }
-      .back-to-top:hover .btt-chevron { animation-play-state: paused; opacity: 0.8; }
+      .back-to-top:hover .btt-label {
+        color: var(--text);
+      }
+      .back-to-top:hover .btt-chevron {
+        animation-play-state: paused;
+        opacity: 0.8;
+      }
       .btt-chevron {
         animation: breathe-up 2s ease-in-out infinite;
       }
@@ -954,8 +965,15 @@
         text-transform: uppercase;
       }
       @keyframes breathe-up {
-        0%, 100% { transform: translateY(0);   opacity: 0.35; }
-        50%       { transform: translateY(-5px); opacity: 0.7; }
+        0%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.35;
+        }
+        50% {
+          transform: translateY(-5px);
+          opacity: 0.7;
+        }
       }
 
       /* ── FOOTER ── */
@@ -990,6 +1008,17 @@
         .annotated.flip .annotated-notes {
           order: 2;
         }
+        .annotated .annotated-phone {
+          width: 85vw;
+          margin: 0 auto;
+        }
+        .annotated .annotated-phone .phone-frame {
+          width: 100% !important;
+        }
+        .annotated .annotated-notes {
+          max-width: 100%;
+          width: 100%;
+        }
         .screen-two {
           grid-template-columns: 1fr;
         }
@@ -1010,11 +1039,6 @@
         }
         .phone-frame.large {
           width: 190px !important;
-        }
-        .cs-nav {
-          flex-direction: column;
-          gap: 40px;
-          align-items: flex-start;
         }
       }
     </style>
@@ -1424,11 +1448,9 @@
                     Confidence as a badge, not a number
                   </div>
                   <div class="decision-desc">
-                    "High Confidence" communicates the same information as "87%"
-                    but in the user's emotional register, not the model's
-                    statistical one. A percentage invites mathematical anxiety.
-                    A badge builds appropriate trust. The low-confidence state
-                    has a completely different result architecture.
+                    A percentage invites anxiety. A badge — High Confidence or
+                    Low Confidence — communicates the same information in the
+                    user's register, not the model's.
                   </div>
                 </div>
                 <div
@@ -1443,11 +1465,8 @@
                   <div class="decision-desc">
                     The model doesn't just name the fly — it tells you which
                     visual features it detected and explains what each one means
-                    functionally. "Tungsten bead → Heavier bead for faster sink
-                    rate and deeper runs." The user can verify that the
-                    identification makes sense, and learns something in the
-                    process. Explainability as a product feature, not a
-                    transparency checkbox.
+                    functionally. The user can verify that the identification
+                    makes sense, and learns something in the process.
                   </div>
                 </div>
                 <div
@@ -1462,10 +1481,8 @@
                   <div class="decision-desc">
                     The product doesn't stop at identification. It translates
                     the ID into a tactical recommendation — how to fish the fly,
-                    at what depth, with which setup. This is a product strategy
-                    choice about where the job-to-be-done actually ends. Most
-                    field guide apps stop at "what is this." HatchMatch answers
-                    "what do I do right now."
+                    at what depth, with which setup. Most field guide apps stop
+                    at the first. HatchMatch completes the job.
                   </div>
                 </div>
                 <div
@@ -1479,12 +1496,8 @@
                   </div>
                   <div class="decision-desc">
                     The pencil icon under the fly name gives the user agency to
-                    correct the model. It communicates that the AI is a starting
-                    point, not an authority — and captures local knowledge back
-                    into the user's library. In a domain where experienced
-                    anglers name their own patterns, this affordance is the
-                    difference between a system that respects expertise and one
-                    that ignores it.
+                    correct the model. The AI is a starting point, not an
+                    authority — and experienced anglers name their own patterns.
                   </div>
                 </div>
               </div>
@@ -1786,12 +1799,21 @@
     </div>
     <!-- /cs-body -->
 
-
     <div class="back-to-top-wrap">
-      <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+      <button
+        class="back-to-top"
+        onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+        aria-label="Back to top"
+      >
         <div class="btt-chevron">
           <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
-            <path d="M1 9l7-7 7 7" stroke="#8a8f96" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path
+              d="M1 9l7-7 7 7"
+              stroke="#8a8f96"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
         </div>
         <span class="btt-label">Top</span>
@@ -1800,20 +1822,24 @@
 
     <!-- CASE STUDY NAV -->
     <div class="wrap">
-      <div class="cs-nav">
-        <a href="index.html" class="cs-nav-link">
-          <span class="cs-nav-dir">← Back</span>
-          <span class="cs-nav-title">All Work</span>
-        </a>
-        <a href="tenjin.html" class="cs-nav-link" style="text-align: right">
-          <span class="cs-nav-dir">Next →</span>
-          <span class="cs-nav-title">Tenjin</span>
-        </a>
+      <div class="case-nav">
+        <div class="case-nav-item">
+          <a href="index.html" class="case-nav-link">
+            <span class="case-nav-label">← BACK</span>
+            <span class="case-nav-title">All Work</span>
+          </a>
+        </div>
+        <div class="case-nav-item case-nav-right">
+          <a href="tenjin.html" class="case-nav-link">
+            <span class="case-nav-label">NEXT →</span>
+            <span class="case-nav-title">Tenjin</span>
+          </a>
+        </div>
       </div>
     </div>
 
     <footer>
-      <span class="ft">© 2025 Chad Stauffer</span>
+      <span class="ft">© 2026 Chad Stauffer</span>
       <span class="ft">Designed &amp; built by hand</span>
     </footer>
 

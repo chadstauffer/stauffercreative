@@ -893,9 +893,18 @@
           grid-template-columns: 1fr;
           gap: 48px;
         }
+        .hero-h1 {
+          font-size: 32px;
+        }
         .ctas {
           flex-direction: column;
-          align-items: flex-start;
+          align-items: stretch;
+        }
+        .ctas .btn-p,
+        .ctas .btn-g {
+          width: 100%;
+          justify-content: center;
+          box-sizing: border-box;
         }
         footer {
           flex-direction: column;
@@ -1367,18 +1376,55 @@
               /></svg
           ></a>
           <a
+            href="https://drive.google.com/file/d/1_tLZs1MPrdqJMBAZThRphzzw8GpDa2DZ/view?usp=sharing"
+            target="_blank"
+            rel="noopener"
+            class="btn-g"
+            >View Résumé ↗</a
+          >
+          <!-- <a
             href="https://hatchmatch.ai"
             target="_blank"
             rel="noopener"
             class="btn-g"
             >hatchmatch.ai ↗</a
-          >
+          > -->
         </div>
       </div>
     </section>
 
     <footer>
-      <span class="ft">© 2025 Chad Stauffer</span>
+      <span class="ft" style="display: flex; align-items: center; gap: 10px"
+        >© 2026 Chad Stauffer
+        <a
+          href="https://x.com/stfrcreative"
+          target="_blank"
+          rel="noopener"
+          style="
+            display: flex;
+            align-items: center;
+            opacity: 0.5;
+            color: inherit;
+          "
+          aria-label="X / Twitter"
+          ><svg
+            width="13"
+            height="13"
+            viewBox="0 0 1200 1227"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.163 519.284ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.828Z"
+            /></svg></a
+      ></span>
+      <div
+        id="weather"
+        class="ft"
+        style="display: flex; align-items: center; gap: 6px; opacity: 0.6"
+      >
+        <span id="weather-text">—</span>
+      </div>
       <span class="ft">Designed &amp; built by hand</span>
     </footer>
 
@@ -1545,6 +1591,36 @@
         { threshold: 0.1 },
       );
       if (cEy) obs2.observe(cEy);
+    </script>
+    <script>
+      // ── WEATHER ──
+      (async () => {
+        try {
+          const res = await fetch(
+            "https://api.openweathermap.org/data/2.5/weather?q=Redding,US&units=imperial&appid=47da5df3c1be443afb7d57352c306cc5",
+          );
+          const d = await res.json();
+          const temp = Math.round(d.main.temp);
+          const condition = d.weather[0].main;
+          const icons = {
+            Clear: "☀️",
+            Clouds: "☁️",
+            Rain: "🌧️",
+            Drizzle: "🌦️",
+            Thunderstorm: "⛈️",
+            Snow: "❄️",
+            Mist: "🌫️",
+            Fog: "🌫️",
+            Haze: "🌫️",
+          };
+          const icon = icons[condition] || "🌡️";
+          document.getElementById("weather-text").textContent =
+            `${icon} ${temp}°F · Redding, CA`;
+          document.getElementById("weather").style.opacity = "1";
+        } catch (e) {
+          document.getElementById("weather").style.display = "none";
+        }
+      })();
     </script>
   </body>
 </html>
